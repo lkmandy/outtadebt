@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "862847817672",
+    "project_id": "outtadebtdb",
+    "storage_bucket": "outtadebtdb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:862847817672:android:6de7211b0d549209b192fd",
+        "android_client_info": {
+          "package_name": "com.outtadebt.outtadebt"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVCHo7qN7uKSCrDd2FhZDEFsd0U4Y_zO8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,7 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+
+Read `agents.md` in the project root for testing guidelines, patterns, and requirements.

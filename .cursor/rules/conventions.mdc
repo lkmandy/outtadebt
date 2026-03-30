@@ -1,0 +1,7 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+
+Read `agents.md` in the project root for coding conventions, file naming, and directory structure.

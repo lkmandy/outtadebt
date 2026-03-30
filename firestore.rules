@@ -1,0 +1,44 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Helper functions ──────────────────────────────────────────────────
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+
+    // ── Debts ─────────────────────────────────────────────────────────────
+    // Each user can only read/write their own debts.
+    match /debts/{debtId} {
+      allow read, update, delete: if isAuthenticated()
+          && isOwner(resource.data.userId);
+      allow create: if isAuthenticated()
+          && isOwner(request.resource.data.userId);
+    }
+
+    // ── Users (profile data) ──────────────────────────────────────────────
+    match /users/{userId} {
+      allow read, write: if isAuthenticated() && isOwner(userId);
+    }
+
+    // ── Circles ───────────────────────────────────────────────────────────
+    // Any authenticated user can read circles.
+    // Only the creator can update/delete a circle.
+    match /circles/{circleId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated()
+          && isOwner(request.resource.data.creatorId);
+      allow update: if isAuthenticated()
+          && (isOwner(resource.data.creatorId)
+              || request.resource.data.diff(resource.data).affectedKeys()
+                  .hasOnly(['members', 'currentAmount']));
+      allow delete: if isAuthenticated()
+          && isOwner(resource.data.creatorId);
+    }
+  }
+}

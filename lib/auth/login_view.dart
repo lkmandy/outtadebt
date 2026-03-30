@@ -1,0 +1,403 @@
+import 'package:flutter/material.dart';
+import 'package:outtadebt/auth/login_view_model.dart';
+import 'package:outtadebt/core/services/auth_service.dart';
+import 'package:outtadebt/core/ui/app_theme.dart';
+import 'package:outtadebt/core/utils/internal_notification/notify_service.dart';
+import 'package:outtadebt/core/utils/locator.dart';
+import 'package:outtadebt/core/utils/navigation/router_service.dart';
+
+class LoginView extends StatefulWidget {
+  const LoginView({super.key});
+
+  @override
+  State<LoginView> createState() => _LoginViewState();
+}
+
+class _LoginViewState extends State<LoginView> {
+  late final LoginViewModel _viewModel = LoginViewModel(
+    routerService: locator<RouterService>(),
+    notifyService: locator<NotifyService>(),
+    authService: locator<AuthService>(),
+  );
+
+  bool _passwordObscured = true;
+
+  @override
+  void dispose() {
+    _viewModel.dispose();
+    super.dispose();
+  }
+
+  void _showForgotPasswordDialog(BuildContext context) {
+    final emailController = TextEditingController(
+      text: _viewModel.emailController.text.trim(),
+    );
+
+    showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Reset Password'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text("Enter your email and we'll send you a reset link."),
+            const SizedBox(height: 16),
+            TextField(
+              controller: emailController,
+              keyboardType: TextInputType.emailAddress,
+              autofocus: true,
+              decoration: const InputDecoration(
+                hintText: 'your@email.com',
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              _viewModel.forgotPassword(emailController.text.trim());
+            },
+            child: const Text('Send'),
+          ),
+        ],
+      ),
+    ).then((_) => emailController.dispose());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.spacing.xl,
+              vertical: context.spacing.lg,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 24),
+
+                // OuttaDebt Logo/Brand Name
+                Center(
+                  child: Text(
+                    'OuttaDebt',
+                    style: context.textStyles.xxxl.copyWith(
+                      color: context.kitColors.green600,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 48),
+
+                // Welcome back heading
+                Text(
+                  'Welcome back',
+                  style: context.textStyles.xxl.copyWith(
+                    color: context.theme.colorScheme.onSurface,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+
+                const SizedBox(height: 8),
+
+                Text(
+                  'Log in to your account to continue',
+                  style: context.textStyles.standard.copyWith(
+                    color: context.kitColors.neutral500,
+                  ),
+                ),
+
+                const SizedBox(height: 32),
+
+                // Email TextField
+                Text(
+                  'Email',
+                  style: context.textStyles.lg.copyWith(
+                    color: context.theme.colorScheme.onSurface,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: _viewModel.emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                    hintText: 'your@email.com',
+                    hintStyle: context.textStyles.standard.copyWith(
+                      color: context.kitColors.neutral400,
+                    ),
+                    filled: true,
+                    fillColor: context.theme.brightness == Brightness.dark ? context.kitColors.neutral800 : context.kitColors.neutral100,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(
+                        color: context.theme.brightness == Brightness.dark ? context.kitColors.neutral700 : context.kitColors.neutral200,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(
+                        color: context.theme.brightness == Brightness.dark ? context.kitColors.neutral700 : context.kitColors.neutral200,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(
+                        color: context.kitColors.green600,
+                        width: 2,
+                      ),
+                    ),
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: context.spacing.md,
+                      vertical: context.spacing.md,
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 24),
+
+                // Password TextField with show/hide toggle
+                Text(
+                  'Password',
+                  style: context.textStyles.lg.copyWith(
+                    color: context.theme.colorScheme.onSurface,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: _viewModel.passwordController,
+                  obscureText: _passwordObscured,
+                  decoration: InputDecoration(
+                    hintText: 'Enter your password',
+                    hintStyle: context.textStyles.standard.copyWith(
+                      color: context.kitColors.neutral400,
+                    ),
+                    filled: true,
+                    fillColor: context.theme.brightness == Brightness.dark ? context.kitColors.neutral800 : context.kitColors.neutral100,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(
+                        color: context.theme.brightness == Brightness.dark ? context.kitColors.neutral700 : context.kitColors.neutral200,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(
+                        color: context.theme.brightness == Brightness.dark ? context.kitColors.neutral700 : context.kitColors.neutral200,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      borderSide: BorderSide(
+                        color: context.kitColors.green600,
+                        width: 2,
+                      ),
+                    ),
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: context.spacing.md,
+                      vertical: context.spacing.md,
+                    ),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _passwordObscured
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility_outlined,
+                        color: context.kitColors.neutral500,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _passwordObscured = !_passwordObscured;
+                        });
+                      },
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 16),
+
+                // Forgot password link
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () => _showForgotPasswordDialog(context),
+                    child: Text(
+                      'Forgot password?',
+                      style: context.textStyles.standard.copyWith(
+                        color: context.kitColors.green600,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 32),
+
+                // Log In button
+                ValueListenableBuilder<bool>(
+                  valueListenable: _viewModel.isLoading,
+                  builder: (context, isLoading, _) {
+                    return SizedBox(
+                      width: double.infinity,
+                      height: 52,
+                      child: FilledButton(
+                        onPressed: isLoading ? null : _viewModel.login,
+                        style: FilledButton.styleFrom(
+                          backgroundColor: context.kitColors.green600,
+                          foregroundColor: Colors.white,
+                          disabledBackgroundColor:
+                              context.kitColors.neutral300,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        child: isLoading
+                            ? SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  valueColor: AlwaysStoppedAnimation(
+                                    context.kitColors.neutral50,
+                                  ),
+                                ),
+                              )
+                            : Text(
+                                'Log In',
+                                style: context.textStyles.lg.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                      ),
+                    );
+                  },
+                ),
+
+                const SizedBox(height: 24),
+
+                // Divider with "or"
+                Row(
+                  children: [
+                    Expanded(
+                      child: Divider(
+                        color: context.kitColors.neutral300,
+                        thickness: 1,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.spacing.md,
+                      ),
+                      child: Text(
+                        'or',
+                        style: context.textStyles.standard.copyWith(
+                          color: context.kitColors.neutral500,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Divider(
+                        color: context.kitColors.neutral300,
+                        thickness: 1,
+                      ),
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 24),
+
+                // Continue with Google button
+                ValueListenableBuilder<bool>(
+                  valueListenable: _viewModel.isLoading,
+                  builder: (context, isLoading, _) {
+                    return SizedBox(
+                      width: double.infinity,
+                      height: 52,
+                      child: OutlinedButton(
+                        onPressed: isLoading ? null : _viewModel.loginWithGoogle,
+                        style: OutlinedButton.styleFrom(
+                          side: BorderSide(
+                            color: context.kitColors.neutral300,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'G',
+                              style: context.textStyles.xl.copyWith(
+                                color: context.theme.colorScheme.onSurface,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Text(
+                              'Continue with Google',
+                              style: context.textStyles.lg.copyWith(
+                                color: context.theme.colorScheme.onSurface,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+
+                const SizedBox(height: 32),
+
+                // Sign up link
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Don't have an account? ",
+                        style: context.textStyles.standard.copyWith(
+                          color: context.theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: _viewModel.navigateToSignup,
+                        style: TextButton.styleFrom(
+                          padding: EdgeInsets.zero,
+                          minimumSize: Size.zero,
+                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        ),
+                        child: Text(
+                          'Sign Up',
+                          style: context.textStyles.standard.copyWith(
+                            color: context.kitColors.green600,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 32),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

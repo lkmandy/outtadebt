@@ -1,0 +1,7 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+
+Read `agents.md` in the project root for full architecture guidelines, MVVM patterns, routing (go_router), service locator, state management, and code examples.
