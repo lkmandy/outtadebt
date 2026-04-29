@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:outtadebt/circles/circles_view_model.dart';
+import 'package:outtadebt/core/ui/constants/kit_colors.dart';
 import 'package:outtadebt/core/ui/widgets/primary_button.dart';
 import 'package:outtadebt/core/utils/locator.dart';
 import 'package:outtadebt/core/utils/navigation/router_service.dart';
@@ -79,18 +80,17 @@ class _CirclesViewState extends State<CirclesView> {
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
-                                color: selectedTab == 0 ? const Color(0xFF10B981) : const Color(0xFF6B7280),
+                                color: selectedTab == 0 ? KitColors.green600 : const Color(0xFF6B7280),
                               ),
                             ),
                             const SizedBox(height: 8),
-                            if (selectedTab == 0)
-                              Container(
-                                height: 3,
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFF10B981),
-                                  borderRadius: BorderRadius.circular(1.5),
-                                ),
+                            Container(
+                              height: 3,
+                              decoration: BoxDecoration(
+                                color: selectedTab == 0 ? KitColors.green600 : Colors.transparent,
+                                borderRadius: BorderRadius.circular(1.5),
                               ),
+                            ),
                           ],
                         ),
                       ),
@@ -106,18 +106,17 @@ class _CirclesViewState extends State<CirclesView> {
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
-                                color: selectedTab == 1 ? const Color(0xFF10B981) : const Color(0xFF6B7280),
+                                color: selectedTab == 1 ? KitColors.green600 : const Color(0xFF6B7280),
                               ),
                             ),
                             const SizedBox(height: 8),
-                            if (selectedTab == 1)
-                              Container(
-                                height: 3,
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFF10B981),
-                                  borderRadius: BorderRadius.circular(1.5),
-                                ),
+                            Container(
+                              height: 3,
+                              decoration: BoxDecoration(
+                                color: selectedTab == 1 ? KitColors.green600 : Colors.transparent,
+                                borderRadius: BorderRadius.circular(1.5),
                               ),
+                            ),
                           ],
                         ),
                       ),
@@ -328,19 +327,23 @@ class _CircleCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      '\$${circle.currentAmount.toStringAsFixed(2)} of \$${circle.goalAmount.toStringAsFixed(2)}',
-                      style: const TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w500,
+                    Flexible(
+                      child: Text(
+                        '\$${circle.currentAmount.toStringAsFixed(2)} of \$${circle.goalAmount.toStringAsFixed(2)}',
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
+                    const SizedBox(width: 8),
                     Text(
                       '${circle.progressPercent.toStringAsFixed(0)}%',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.w500,
-                        color: Color(0xFF10B981),
+                        color: KitColors.green600,
                       ),
                     ),
                   ],

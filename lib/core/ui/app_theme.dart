@@ -8,26 +8,6 @@ import 'package:outtadebt/core/ui/constants/shadows.dart';
 import 'package:outtadebt/core/ui/constants/spacing.dart';
 import 'package:outtadebt/core/ui/constants/text_styles.dart';
 
-/// AppTheme is a class that builds a theme for the app.
-/// By default this will support light and dark mode.
-///
-/// you can access different theme extensions from the context
-///
-/// ```dart
-/// context.textStyles.standard
-/// context.neutralColors.neutral50
-/// context.borderRadius.md
-/// context.spacing.md
-/// context.durations.duration200
-/// context.shadows.sm
-/// ```
-///
-/// Some are also just instances of the class, so you can access them directly without context:
-///
-/// ```dart
-/// CustomSpacing.instance.md
-/// CustomDurations.instance.duration200
-/// ```
 class AppTheme {
   static ThemeData buildTheme(Brightness brightness) {
     final isDark = brightness == Brightness.dark;
@@ -41,34 +21,32 @@ class AppTheme {
       brightness: brightness,
       colorScheme: ColorScheme(
         brightness: brightness,
-        surface: isDark ? kitColors.neutral900 : kitColors.neutral100,
-        primary: isDark ? kitColors.neutral50 : kitColors.neutral950,
-        onPrimary: isDark ? kitColors.neutral950 : kitColors.neutral50,
-        secondary: isDark ? kitColors.neutral50 : kitColors.neutral950,
-        onSecondary: isDark ? kitColors.neutral950 : kitColors.neutral50,
+        // Slate 50 as page bg; cards stay white via surface
+        surface: isDark ? kitColors.neutral900 : Colors.white,
+        // Navy 950 as the primary / button colour
+        primary: isDark ? kitColors.neutral50 : KitColors.navy950,
+        onPrimary: Colors.white,
+        secondary: isDark ? kitColors.neutral50 : KitColors.navy950,
+        onSecondary: Colors.white,
         error: Colors.red.shade400,
         onError: kitColors.neutral50,
         onSurface: isDark ? kitColors.neutral50 : kitColors.neutral950,
-        surfaceTint: isDark ? kitColors.neutral900 : kitColors.neutral100,
+        surfaceTint: isDark ? kitColors.neutral900 : Colors.white,
       ),
       pageTransitionsTheme: const PageTransitionsTheme(
         builders: <TargetPlatform, PageTransitionsBuilder>{
-          // Set the predictive back transitions for Android.
           TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
         },
       ),
-      scaffoldBackgroundColor: isDark
-          ? kitColors.neutral900
-          : kitColors.neutral100,
+      // Slate 50 page background so cards (white surface) pop off it
+      scaffoldBackgroundColor: isDark ? kitColors.neutral900 : KitColors.slate50,
       appBarTheme: AppBarTheme(
         elevation: 0,
         backgroundColor: Colors.transparent,
         foregroundColor: isDark ? kitColors.neutral50 : kitColors.neutral950,
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
-          // For iOS: dark icons in light mode, light icons in dark mode
           statusBarBrightness: isDark ? Brightness.dark : Brightness.light,
-          // For Android: dark icons in light mode, light icons in dark mode
           statusBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
         ),
       ),
@@ -97,21 +75,22 @@ class AppTheme {
       useMaterial3: true,
       splashFactory: NoSplash.splashFactory,
       highlightColor: Colors.white.withValues(alpha: .1),
+      // Inputs: Slate 100 fill, 12 px radius (rounded-xl in design)
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
-        fillColor: isDark ? kitColors.neutral800 : kitColors.neutral100,
+        fillColor: isDark ? kitColors.neutral800 : KitColors.slate100,
         hintStyle: TextStyle(color: isDark ? kitColors.neutral500 : kitColors.neutral400),
         border: OutlineInputBorder(
           borderSide: BorderSide(color: isDark ? kitColors.neutral700 : kitColors.neutral200),
-          borderRadius: borderRadius.xl,
+          borderRadius: borderRadius.xxl, // 12 px
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: isDark ? kitColors.neutral700 : kitColors.neutral200),
-          borderRadius: borderRadius.xl,
+          borderRadius: borderRadius.xxl, // 12 px
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: kitColors.green600, width: 2),
-          borderRadius: borderRadius.xl,
+          borderRadius: borderRadius.xxl, // 12 px
         ),
         contentPadding: EdgeInsets.symmetric(
           horizontal: CustomSpacing.instance.md,
@@ -124,30 +103,30 @@ class AppTheme {
         ),
         menuStyle: MenuStyle(
           backgroundColor: WidgetStatePropertyAll(
-            isDark ? kitColors.neutral900 : kitColors.neutral100,
+            isDark ? kitColors.neutral900 : Colors.white,
           ),
-          surfaceTintColor: WidgetStatePropertyAll(Colors.transparent),
+          surfaceTintColor: const WidgetStatePropertyAll(Colors.transparent),
         ),
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
-          fillColor: isDark ? kitColors.neutral900 : kitColors.neutral100,
+          fillColor: isDark ? kitColors.neutral900 : Colors.white,
           border: OutlineInputBorder(
             borderSide: BorderSide(
               color: isDark ? kitColors.neutral800 : kitColors.neutral200,
             ),
-            borderRadius: borderRadius.md,
+            borderRadius: borderRadius.xxl,
           ),
           enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: isDark ? kitColors.neutral800 : kitColors.neutral200,
             ),
-            borderRadius: borderRadius.md,
+            borderRadius: borderRadius.xxl,
           ),
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
               color: isDark ? kitColors.neutral800 : kitColors.neutral200,
             ),
-            borderRadius: borderRadius.md,
+            borderRadius: borderRadius.xxl,
           ),
           contentPadding: EdgeInsets.symmetric(
             horizontal: CustomSpacing.instance.md,
@@ -156,27 +135,46 @@ class AppTheme {
         ),
       ),
       popupMenuTheme: PopupMenuThemeData(
-        color: isDark ? kitColors.neutral900 : kitColors.neutral100,
+        color: isDark ? kitColors.neutral900 : Colors.white,
         textStyle: TextStyle(
           color: isDark ? kitColors.neutral50 : kitColors.neutral950,
         ),
       ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(borderRadius: borderRadius.md),
+      // FilledButton: Navy 950, 16 px radius (rounded-2xl)
+      filledButtonTheme: FilledButtonThemeData(
+        style: FilledButton.styleFrom(
+          backgroundColor: KitColors.navy950,
+          foregroundColor: Colors.white,
+          disabledBackgroundColor: kitColors.neutral300,
+          shape: RoundedRectangleBorder(
+            borderRadius: borderRadius.xxxl, // 16 px
+          ),
         ),
       ),
+      // ElevatedButton: Navy 950, 16 px radius
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: KitColors.navy950,
+          foregroundColor: Colors.white,
+          disabledBackgroundColor: kitColors.neutral300,
+          shape: RoundedRectangleBorder(borderRadius: borderRadius.xxxl),
+          elevation: 0,
+        ),
+      ),
+      // OutlinedButton: Slate border, 12 px radius (secondary style)
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          shape: RoundedRectangleBorder(borderRadius: borderRadius.md),
+          foregroundColor: isDark ? kitColors.neutral50 : kitColors.neutral950,
+          shape: RoundedRectangleBorder(borderRadius: borderRadius.xxl),
           side: BorderSide(
-            color: isDark ? kitColors.neutral800 : kitColors.neutral200,
+            color: isDark ? kitColors.neutral700 : kitColors.neutral200,
           ),
         ),
       ),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-          shape: RoundedRectangleBorder(borderRadius: borderRadius.md),
+          foregroundColor: KitColors.navy950,
+          shape: RoundedRectangleBorder(borderRadius: borderRadius.xxl),
         ),
       ),
     );

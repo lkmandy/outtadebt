@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:outtadebt/core/ui/constants/kit_colors.dart';
 
 class ShellView extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
@@ -45,7 +46,7 @@ class ShellView extends StatelessWidget {
             label: 'Hub',
           ),
         ],
-        indicatorColor: const Color(0xFF10B981).withValues(alpha: 0.2),
+        indicatorColor: KitColors.green600.withValues(alpha: 0.2),
       ),
     );
   }

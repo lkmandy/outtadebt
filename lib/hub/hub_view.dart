@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:outtadebt/core/ui/app_theme.dart';
+import 'package:outtadebt/core/ui/constants/kit_colors.dart';
 import 'package:outtadebt/core/utils/locator.dart';
 import 'package:outtadebt/core/services/auth_service.dart';
 import 'package:outtadebt/core/utils/internal_notification/notify_service.dart';
@@ -41,7 +42,7 @@ class _HubViewState extends State<HubView> {
                     vertical: context.spacing.xs,
                   ),
                   decoration: BoxDecoration(
-                    color: const Color(0xFF10B981),
+                    color: KitColors.green600,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Row(
@@ -282,7 +283,7 @@ class _HubViewState extends State<HubView> {
               Text(
                 'Complete this course to earn +${course.pointsReward} points',
                 style: context.textStyles.sm.copyWith(
-                  color: const Color(0xFF10B981),
+                  color: KitColors.green600,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -298,7 +299,7 @@ class _HubViewState extends State<HubView> {
                   Text(
                     'Completed',
                     style: context.textStyles.sm.copyWith(
-                      color: const Color(0xFF10B981),
+                      color: KitColors.green600,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -471,13 +472,13 @@ class _CourseCard extends StatelessWidget {
                 children: [
                   Container(
                     decoration: BoxDecoration(
-                      color: const Color(0xFF10B981).withValues(alpha: 0.1),
+                      color: KitColors.green600.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     padding: EdgeInsets.all(context.spacing.sm),
                     child: Icon(
                       course.icon,
-                      color: const Color(0xFF10B981),
+                      color: KitColors.green600,
                       size: 24,
                     ),
                   ),
@@ -518,7 +519,7 @@ class _CourseCard extends StatelessWidget {
                         Icon(
                           Icons.check_circle,
                           size: 16,
-                          color: const Color(0xFF10B981),
+                          color: KitColors.green600,
                         ),
                     ],
                   ),
@@ -530,13 +531,13 @@ class _CourseCard extends StatelessWidget {
                       vertical: context.spacing.xs,
                     ),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF10B981).withValues(alpha: 0.1),
+                      color: KitColors.green600.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Text(
                       '+${course.pointsReward} pts',
                       style: context.textStyles.xs.copyWith(
-                        color: const Color(0xFF10B981),
+                        color: KitColors.green600,
                         fontWeight: FontWeight.w600,
                       ),
                       textAlign: TextAlign.center,
@@ -658,12 +659,12 @@ class _LeaderboardRow extends StatelessWidget {
       margin: EdgeInsets.only(bottom: context.spacing.sm),
       decoration: BoxDecoration(
         color: entry.isCurrentUser
-            ? const Color(0xFF10B981).withValues(alpha: 0.1)
+            ? KitColors.green600.withValues(alpha: 0.1)
             : context.kitColors.neutral50,
         borderRadius: context.borderRadius.md,
         border: entry.isCurrentUser
             ? Border.all(
-                color: const Color(0xFF10B981),
+                color: KitColors.green600,
                 width: 1.5,
               )
             : null,
@@ -693,7 +694,7 @@ class _LeaderboardRow extends StatelessWidget {
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: const Color(0xFF10B981).withValues(alpha: 0.2),
+              color: KitColors.green600.withValues(alpha: 0.2),
               shape: BoxShape.circle,
             ),
             child: Center(
@@ -702,7 +703,7 @@ class _LeaderboardRow extends StatelessWidget {
                     ? entry.displayName[0].toUpperCase()
                     : '?',
                 style: context.textStyles.standard.copyWith(
-                  color: const Color(0xFF10B981),
+                  color: KitColors.green600,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -740,7 +741,7 @@ class _LeaderboardRow extends StatelessWidget {
                 vertical: context.spacing.xs,
               ),
               decoration: BoxDecoration(
-                color: const Color(0xFF10B981),
+                color: KitColors.green600,
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Text(
@@ -786,15 +787,14 @@ class _TabButton extends StatelessWidget {
           ),
         ),
         SizedBox(height: context.spacing.sm),
-        if (isSelected)
-          Container(
-            height: 3,
-            width: 40,
-            decoration: BoxDecoration(
-              color: const Color(0xFF10B981),
-              borderRadius: BorderRadius.circular(1.5),
-            ),
+        Container(
+          height: 3,
+          width: 40,
+          decoration: BoxDecoration(
+            color: isSelected ? KitColors.green600 : Colors.transparent,
+            borderRadius: BorderRadius.circular(1.5),
           ),
+        ),
       ],
     );
   }

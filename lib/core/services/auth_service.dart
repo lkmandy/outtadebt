@@ -1,103 +1,108 @@
-import 'dart:async';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:convert';
 import 'package:flutter/foundation.dart';
-import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class SimpleUser {
+  final String uid;
+  final String email;
+  final String? displayName;
+
+  const SimpleUser({
+    required this.uid,
+    required this.email,
+    this.displayName,
+  });
+}
 
 class AuthService {
-  final FirebaseAuth _firebaseAuth;
-  final GoogleSignIn _googleSignIn;
+  AuthService({required SharedPreferences prefs}) : _prefs = prefs {
+    _loadSession();
+  }
 
-  late final StreamSubscription<User?> _authStateSubscription;
+  final SharedPreferences _prefs;
+
+  static const _sessionIdKey = 'auth_user_id';
+  static const _sessionEmailKey = 'auth_user_email';
+  static const _sessionNameKey = 'auth_user_name';
 
   final isLoggedIn = ValueNotifier<bool>(false);
   final userId = ValueNotifier<String?>(null);
 
-  AuthService({
-    FirebaseAuth? firebaseAuth,
-    GoogleSignIn? googleSignIn,
-  })  : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance,
-        _googleSignIn = googleSignIn ?? GoogleSignIn();
+  SimpleUser? _currentUser;
+  SimpleUser? get currentUser => _currentUser;
 
-  void initialize() {
-    _authStateSubscription = _firebaseAuth.authStateChanges().listen((user) {
-      isLoggedIn.value = user != null;
-      userId.value = user?.uid;
-    });
+  void _loadSession() {
+    final id = _prefs.getString(_sessionIdKey);
+    final email = _prefs.getString(_sessionEmailKey);
+    if (id != null && email != null) {
+      _currentUser = SimpleUser(
+        uid: id,
+        email: email,
+        displayName: _prefs.getString(_sessionNameKey),
+      );
+      isLoggedIn.value = true;
+      userId.value = id;
+    }
   }
 
-  User? get currentUser => _firebaseAuth.currentUser;
-
-  Future<UserCredential> signInWithEmailAndPassword({
+  Future<void> signInWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
-    try {
-      return await _firebaseAuth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-    } catch (e) {
-      rethrow;
+    final stored = _prefs.getString('user_${email.toLowerCase()}');
+    if (stored == null) {
+      throw Exception('No account found with this email');
     }
+    final data = jsonDecode(stored) as Map<String, dynamic>;
+    if (data['password'] != password) {
+      throw Exception('Incorrect password');
+    }
+    _currentUser = SimpleUser(
+      uid: data['id'] as String,
+      email: email,
+      displayName: data['name'] as String?,
+    );
+    await _saveSession();
   }
 
-  Future<UserCredential> createUserWithEmailAndPassword({
+  Future<void> createUserWithEmailAndPassword({
     required String email,
     required String password,
+    String? name,
   }) async {
-    try {
-      return await _firebaseAuth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-    } catch (e) {
-      rethrow;
+    final key = 'user_${email.toLowerCase()}';
+    if (_prefs.getString(key) != null) {
+      throw Exception('Email is already in use');
     }
-  }
-
-  Future<UserCredential> signInWithGoogle() async {
-    try {
-      final googleUser = await _googleSignIn.signIn();
-      if (googleUser == null) {
-        throw FirebaseAuthException(
-          code: 'ERROR_ABORTED_BY_USER',
-          message: 'Sign in aborted by user',
-        );
-      }
-
-      final googleAuth = await googleUser.authentication;
-      final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
-
-      return await _firebaseAuth.signInWithCredential(credential);
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  Future<void> sendPasswordResetEmail({required String email}) async {
-    try {
-      await _firebaseAuth.sendPasswordResetEmail(email: email);
-    } catch (e) {
-      rethrow;
-    }
+    final id = email.toLowerCase();
+    await _prefs.setString(
+      key,
+      jsonEncode({'id': id, 'name': name, 'password': password}),
+    );
+    _currentUser = SimpleUser(uid: id, email: email, displayName: name);
+    await _saveSession();
   }
 
   Future<void> signOut() async {
-    try {
-      await Future.wait([
-        _firebaseAuth.signOut(),
-        _googleSignIn.signOut(),
-      ]);
-    } catch (e) {
-      rethrow;
+    await _prefs.remove(_sessionIdKey);
+    await _prefs.remove(_sessionEmailKey);
+    await _prefs.remove(_sessionNameKey);
+    _currentUser = null;
+    isLoggedIn.value = false;
+    userId.value = null;
+  }
+
+  Future<void> _saveSession() async {
+    await _prefs.setString(_sessionIdKey, _currentUser!.uid);
+    await _prefs.setString(_sessionEmailKey, _currentUser!.email);
+    if (_currentUser!.displayName != null) {
+      await _prefs.setString(_sessionNameKey, _currentUser!.displayName!);
     }
+    isLoggedIn.value = true;
+    userId.value = _currentUser!.uid;
   }
 
   void dispose() {
-    _authStateSubscription.cancel();
     isLoggedIn.dispose();
     userId.dispose();
   }

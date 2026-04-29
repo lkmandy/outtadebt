@@ -45,7 +45,6 @@ class _SignupViewState extends State<SignupView> {
               children: [
                 const SizedBox(height: 24),
 
-                // OuttaDebt Logo/Brand Name
                 Center(
                   child: Text(
                     'OuttaDebt',
@@ -58,7 +57,6 @@ class _SignupViewState extends State<SignupView> {
 
                 const SizedBox(height: 40),
 
-                // Create account heading
                 Text(
                   'Create account',
                   style: context.textStyles.xxl.copyWith(
@@ -69,7 +67,6 @@ class _SignupViewState extends State<SignupView> {
 
                 const SizedBox(height: 8),
 
-                // Get OuttaDebt subheading
                 Text(
                   'Get OuttaDebt',
                   style: context.textStyles.standard.copyWith(
@@ -79,7 +76,6 @@ class _SignupViewState extends State<SignupView> {
 
                 const SizedBox(height: 32),
 
-                // Full Name TextField
                 Text(
                   'Full Name',
                   style: context.textStyles.lg.copyWith(
@@ -97,17 +93,23 @@ class _SignupViewState extends State<SignupView> {
                       color: context.kitColors.neutral400,
                     ),
                     filled: true,
-                    fillColor: context.theme.brightness == Brightness.dark ? context.kitColors.neutral800 : context.kitColors.neutral100,
+                    fillColor: context.theme.brightness == Brightness.dark
+                        ? context.kitColors.neutral800
+                        : context.kitColors.neutral100,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                       borderSide: BorderSide(
-                        color: context.theme.brightness == Brightness.dark ? context.kitColors.neutral700 : context.kitColors.neutral200,
+                        color: context.theme.brightness == Brightness.dark
+                            ? context.kitColors.neutral700
+                            : context.kitColors.neutral200,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                       borderSide: BorderSide(
-                        color: context.theme.brightness == Brightness.dark ? context.kitColors.neutral700 : context.kitColors.neutral200,
+                        color: context.theme.brightness == Brightness.dark
+                            ? context.kitColors.neutral700
+                            : context.kitColors.neutral200,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
@@ -126,7 +128,6 @@ class _SignupViewState extends State<SignupView> {
 
                 const SizedBox(height: 20),
 
-                // Email TextField
                 Text(
                   'Email',
                   style: context.textStyles.lg.copyWith(
@@ -144,17 +145,23 @@ class _SignupViewState extends State<SignupView> {
                       color: context.kitColors.neutral400,
                     ),
                     filled: true,
-                    fillColor: context.theme.brightness == Brightness.dark ? context.kitColors.neutral800 : context.kitColors.neutral100,
+                    fillColor: context.theme.brightness == Brightness.dark
+                        ? context.kitColors.neutral800
+                        : context.kitColors.neutral100,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                       borderSide: BorderSide(
-                        color: context.theme.brightness == Brightness.dark ? context.kitColors.neutral700 : context.kitColors.neutral200,
+                        color: context.theme.brightness == Brightness.dark
+                            ? context.kitColors.neutral700
+                            : context.kitColors.neutral200,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                       borderSide: BorderSide(
-                        color: context.theme.brightness == Brightness.dark ? context.kitColors.neutral700 : context.kitColors.neutral200,
+                        color: context.theme.brightness == Brightness.dark
+                            ? context.kitColors.neutral700
+                            : context.kitColors.neutral200,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
@@ -173,7 +180,6 @@ class _SignupViewState extends State<SignupView> {
 
                 const SizedBox(height: 20),
 
-                // Password TextField
                 Text(
                   'Password',
                   style: context.textStyles.lg.copyWith(
@@ -191,17 +197,23 @@ class _SignupViewState extends State<SignupView> {
                       color: context.kitColors.neutral400,
                     ),
                     filled: true,
-                    fillColor: context.theme.brightness == Brightness.dark ? context.kitColors.neutral800 : context.kitColors.neutral100,
+                    fillColor: context.theme.brightness == Brightness.dark
+                        ? context.kitColors.neutral800
+                        : context.kitColors.neutral100,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                       borderSide: BorderSide(
-                        color: context.theme.brightness == Brightness.dark ? context.kitColors.neutral700 : context.kitColors.neutral200,
+                        color: context.theme.brightness == Brightness.dark
+                            ? context.kitColors.neutral700
+                            : context.kitColors.neutral200,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                       borderSide: BorderSide(
-                        color: context.theme.brightness == Brightness.dark ? context.kitColors.neutral700 : context.kitColors.neutral200,
+                        color: context.theme.brightness == Brightness.dark
+                            ? context.kitColors.neutral700
+                            : context.kitColors.neutral200,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
@@ -233,7 +245,6 @@ class _SignupViewState extends State<SignupView> {
 
                 const SizedBox(height: 20),
 
-                // Confirm Password TextField
                 Text(
                   'Confirm Password',
                   style: context.textStyles.lg.copyWith(
@@ -251,17 +262,23 @@ class _SignupViewState extends State<SignupView> {
                       color: context.kitColors.neutral400,
                     ),
                     filled: true,
-                    fillColor: context.theme.brightness == Brightness.dark ? context.kitColors.neutral800 : context.kitColors.neutral100,
+                    fillColor: context.theme.brightness == Brightness.dark
+                        ? context.kitColors.neutral800
+                        : context.kitColors.neutral100,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                       borderSide: BorderSide(
-                        color: context.theme.brightness == Brightness.dark ? context.kitColors.neutral700 : context.kitColors.neutral200,
+                        color: context.theme.brightness == Brightness.dark
+                            ? context.kitColors.neutral700
+                            : context.kitColors.neutral200,
                       ),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
                       borderSide: BorderSide(
-                        color: context.theme.brightness == Brightness.dark ? context.kitColors.neutral700 : context.kitColors.neutral200,
+                        color: context.theme.brightness == Brightness.dark
+                            ? context.kitColors.neutral700
+                            : context.kitColors.neutral200,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
@@ -293,7 +310,6 @@ class _SignupViewState extends State<SignupView> {
 
                 const SizedBox(height: 12),
 
-                // Password strength requirements
                 Text(
                   'Password must be at least 8 characters',
                   style: context.textStyles.xs.copyWith(
@@ -303,7 +319,6 @@ class _SignupViewState extends State<SignupView> {
 
                 const SizedBox(height: 32),
 
-                // Create Account button
                 ValueListenableBuilder<bool>(
                   valueListenable: _viewModel.isLoading,
                   builder: (context, isLoading, _) {
@@ -312,15 +327,6 @@ class _SignupViewState extends State<SignupView> {
                       height: 52,
                       child: FilledButton(
                         onPressed: isLoading ? null : _viewModel.signup,
-                        style: FilledButton.styleFrom(
-                          backgroundColor: context.kitColors.green600,
-                          foregroundColor: Colors.white,
-                          disabledBackgroundColor:
-                              context.kitColors.neutral300,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
                         child: isLoading
                             ? SizedBox(
                                 height: 20,
@@ -344,84 +350,8 @@ class _SignupViewState extends State<SignupView> {
                   },
                 ),
 
-                const SizedBox(height: 24),
-
-                // Divider with "or"
-                Row(
-                  children: [
-                    Expanded(
-                      child: Divider(
-                        color: context.kitColors.neutral300,
-                        thickness: 1,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: context.spacing.md,
-                      ),
-                      child: Text(
-                        'or',
-                        style: context.textStyles.standard.copyWith(
-                          color: context.kitColors.neutral500,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Divider(
-                        color: context.kitColors.neutral300,
-                        thickness: 1,
-                      ),
-                    ),
-                  ],
-                ),
-
-                const SizedBox(height: 24),
-
-                // Continue with Google button
-                ValueListenableBuilder<bool>(
-                  valueListenable: _viewModel.isLoading,
-                  builder: (context, isLoading, _) {
-                    return SizedBox(
-                      width: double.infinity,
-                      height: 52,
-                      child: OutlinedButton(
-                        onPressed: isLoading ? null : _viewModel.signupWithGoogle,
-                        style: OutlinedButton.styleFrom(
-                          side: BorderSide(
-                            color: context.kitColors.neutral300,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'G',
-                              style: context.textStyles.xl.copyWith(
-                                color: context.theme.colorScheme.onSurface,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(width: 12),
-                            Text(
-                              'Continue with Google',
-                              style: context.textStyles.lg.copyWith(
-                                color: context.theme.colorScheme.onSurface,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
-
                 const SizedBox(height: 32),
 
-                // Log in link
                 Center(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -429,7 +359,8 @@ class _SignupViewState extends State<SignupView> {
                       Text(
                         'Already have an account? ',
                         style: context.textStyles.standard.copyWith(
-                          color: context.theme.colorScheme.onSurface.withValues(alpha: 0.7),
+                          color: context.theme.colorScheme.onSurface
+                              .withValues(alpha: 0.7),
                         ),
                       ),
                       TextButton(

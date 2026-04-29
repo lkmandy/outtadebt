@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:outtadebt/circles/circle_detail_view_model.dart';
+import 'package:outtadebt/core/ui/constants/kit_colors.dart';
 import 'package:outtadebt/core/utils/locator.dart';
 import 'package:outtadebt/core/services/circle_service.dart';
 import 'package:outtadebt/core/services/auth_service.dart';
@@ -159,13 +160,17 @@ class _CircleDetailViewState extends State<CircleDetailView> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              '\$${circle.currentAmount.toStringAsFixed(2)} of \$${circle.goalAmount.toStringAsFixed(2)}',
-                              style: const TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
+                            Flexible(
+                              child: Text(
+                                '\$${circle.currentAmount.toStringAsFixed(2)} of \$${circle.goalAmount.toStringAsFixed(2)}',
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
+                            const SizedBox(width: 8),
                             Text(
                               '${circle.progressPercent.toStringAsFixed(1)}%',
                               style: TextStyle(
@@ -259,7 +264,7 @@ class _CircleDetailViewState extends State<CircleDetailView> {
                                         width: 56,
                                         child: ElevatedButton(
                                           style: ElevatedButton.styleFrom(
-                                            backgroundColor: const Color(0xFF10B981),
+                                            backgroundColor: KitColors.navy950,
                                             shape: RoundedRectangleBorder(
                                               borderRadius: BorderRadius.circular(8),
                                             ),
@@ -333,7 +338,7 @@ class _CircleDetailViewState extends State<CircleDetailView> {
                                     )
                                   : ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: const Color(0xFF10B981),
+                                        backgroundColor: KitColors.navy950,
                                         shape: RoundedRectangleBorder(
                                           borderRadius: BorderRadius.circular(8),
                                         ),

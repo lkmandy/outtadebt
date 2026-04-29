@@ -57,62 +57,62 @@ class AddDebtViewModel {
       return;
     }
 
-    isLoading.value = true;
+    final double balance, interestRate, minimumPayment;
     try {
-      final balance = double.parse(balanceText);
-      final interestRate = double.parse(interestRateText);
-      final minimumPayment = double.parse(minimumPaymentText);
-
-      if (balance <= 0) {
-        _notifyService.setToastEvent(
-          ToastEventError(message: 'Balance must be greater than 0'),
-        );
-        isLoading.value = false;
-        return;
-      }
-
-      if (interestRate < 0) {
-        _notifyService.setToastEvent(
-          ToastEventError(message: 'Interest rate cannot be negative'),
-        );
-        isLoading.value = false;
-        return;
-      }
-
-      if (minimumPayment <= 0) {
-        _notifyService.setToastEvent(
-          ToastEventError(message: 'Minimum payment must be greater than 0'),
-        );
-        isLoading.value = false;
-        return;
-      }
-
-      await _debtService.addDebt(
-        userId: userId,
-        name: name,
-        type: selectedType.value,
-        balance: balance,
-        interestRate: interestRate,
-        minimumPayment: minimumPayment,
-        dueDay: selectedDueDay.value,
-      );
-
-      _notifyService.setToastEvent(
-        ToastEventSuccess(message: 'Debt added successfully'),
-      );
-
-      _routerService.pop();
+      balance = double.parse(balanceText);
+      interestRate = double.parse(interestRateText);
+      minimumPayment = double.parse(minimumPaymentText);
     } on FormatException {
       _notifyService.setToastEvent(
         ToastEventError(message: 'Please enter valid numbers'),
       );
-    } catch (e) {
-      _notifyService.setToastEvent(
-        ToastEventError(message: 'Failed to add debt. Please try again.'),
-      );
-    } finally {
-      isLoading.value = false;
+      return;
     }
+
+    if (balance <= 0) {
+      _notifyService.setToastEvent(
+        ToastEventError(message: 'Balance must be greater than 0'),
+      );
+      return;
+    }
+
+    if (interestRate < 0) {
+      _notifyService.setToastEvent(
+        ToastEventError(message: 'Interest rate cannot be negative'),
+      );
+      return;
+    }
+
+    if (minimumPayment <= 0) {
+      _notifyService.setToastEvent(
+        ToastEventError(message: 'Minimum payment must be greater than 0'),
+      );
+      return;
+    }
+
+    isLoading.value = true;
+
+    // Fire the write without awaiting server confirmation. Firestore queues the
+    // write locally and syncs in the background, so we can navigate immediately.
+    _debtService.addDebt(
+      userId: userId,
+      name: name,
+      type: selectedType.value,
+      balance: balance,
+      interestRate: interestRate,
+      minimumPayment: minimumPayment,
+      dueDay: selectedDueDay.value,
+    ).catchError((Object _) {
+      _notifyService.setToastEvent(
+        ToastEventError(message: 'Failed to save debt. Please try again.'),
+      );
+    });
+
+    isLoading.value = false;
+    _notifyService.setToastEvent(
+      ToastEventSuccess(message: 'Debt added successfully'),
+    );
+    _routerService.pop();
   }
 
   void selectType(DebtType type) {

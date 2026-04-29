@@ -82,7 +82,7 @@ class OnboardingViewModel {
 
   Future<void> _completeOnboarding() async {
     await _preferencesService.completeOnboarding();
-    _routerService.go(RoutePaths.home);
+    _routerService.go(RoutePaths.login);
   }
 
   void dispose() {

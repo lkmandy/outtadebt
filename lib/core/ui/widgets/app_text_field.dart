@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:outtadebt/core/ui/constants/kit_colors.dart';
 
 class AppTextField extends StatefulWidget {
   final String label;
@@ -47,19 +48,13 @@ class _AppTextFieldState extends State<AppTextField> {
 
   @override
   Widget build(BuildContext context) {
-    final emeraldColor = const Color(0xFF10B981);
-    final emeraldFocusColor = const Color(0xFF047857);
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
           widget.label,
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-          ),
+          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
         ),
         const SizedBox(height: 8),
         TextFormField(
@@ -74,75 +69,50 @@ class _AppTextFieldState extends State<AppTextField> {
             hintText: widget.hint,
             errorText: widget.errorText,
             contentPadding: const EdgeInsets.symmetric(
-              horizontal: 12,
-              vertical: 12,
+              horizontal: 16,
+              vertical: 14,
             ),
             constraints: const BoxConstraints(minHeight: 48),
+            // fillColor and filled come from inputDecorationTheme (Slate 100)
             prefixIcon: widget.prefixIcon != null
-                ? Icon(
-                    widget.prefixIcon,
-                    color: emeraldColor,
-                  )
+                ? Icon(widget.prefixIcon, color: KitColors.navy950)
                 : null,
             suffixIcon: widget.suffixIcon != null
                 ? IconButton(
                     icon: Icon(widget.suffixIcon),
-                    color: emeraldColor,
+                    color: KitColors.navy950,
                     onPressed: widget.onSuffixIconPressed ??
                         () {
                           if (widget.obscureText) {
-                            setState(() {
-                              _obscureText = !_obscureText;
-                            });
+                            setState(() => _obscureText = !_obscureText);
                           }
                         },
                   )
                 : null,
+            // Borders (radius 12px) — inherit theme; only override colours
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(
-                color: Color(0xFFE5E7EB),
-                width: 1,
-              ),
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(
-                color: Color(0xFFE5E7EB),
-                width: 1,
-              ),
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(
-                color: emeraldFocusColor,
-                width: 2,
-              ),
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: KitColors.green600, width: 2),
             ),
             errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(
-                color: Color(0xFFEF4444),
-                width: 1,
-              ),
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: Color(0xFFEF4444)),
             ),
             focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(
-                color: Color(0xFFEF4444),
-                width: 2,
-              ),
+              borderRadius: BorderRadius.circular(12),
+              borderSide: const BorderSide(color: Color(0xFFEF4444), width: 2),
             ),
-            filled: true,
-            fillColor: Theme.of(context).colorScheme.surface,
-            hintStyle: TextStyle(
-              color: Colors.grey.shade400,
-              fontSize: 14,
-            ),
+            hintStyle: const TextStyle(color: Color(0xFFADB5BD), fontSize: 14),
           ),
-          style: const TextStyle(
-            fontSize: 14,
-          ),
+          style: const TextStyle(fontSize: 14),
         ),
       ],
     );

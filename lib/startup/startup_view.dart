@@ -50,7 +50,7 @@ class _StartupViewState extends State<StartupView> {
           supportedLocales: AppLocalizations.supportedLocales,
           debugShowCheckedModeBanner: false,
           theme: AppTheme.buildTheme(Brightness.light),
-          darkTheme: AppTheme.buildTheme(Brightness.dark),
+          themeMode: ThemeMode.light,
           builder: (context, child) {
             Translate.init(context);
             return switch (state) {

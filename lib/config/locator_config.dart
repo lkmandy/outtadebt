@@ -11,7 +11,6 @@ import 'package:outtadebt/core/utils/navigation/router_service.dart';
 import 'package:outtadebt/core/utils/internal_notification/notify_service.dart';
 import 'package:outtadebt/core/utils/preferences/user_preferences_service.dart';
 
-/// Called by [StartupViewModel] after resolving the initial location at runtime.
 List<Module> appModulesWithLocation({
   required SharedPreferences prefs,
   required String initialLocation,
@@ -22,8 +21,11 @@ List<Module> appModulesWithLocation({
       lazy: false,
     ),
     Module<RouterService>(
-      builder: () =>
-          RouterService(routes: routes, initialLocation: initialLocation),
+      builder: () => RouterService(
+        routes: routes,
+        initialLocation: initialLocation,
+        isLoggedIn: () => prefs.getString('auth_user_id') != null,
+      ),
       lazy: false,
     ),
     Module<NotifyService>(builder: () => NotifyService(), lazy: false),
@@ -33,10 +35,8 @@ List<Module> appModulesWithLocation({
       ),
       lazy: true,
     ),
-
-    // ── Firebase / Feature Services ───────────────────────────────────────
     Module<AuthService>(
-      builder: () => AuthService(),
+      builder: () => AuthService(prefs: prefs),
       lazy: false,
     ),
     Module<DebtService>(
@@ -50,10 +50,13 @@ List<Module> appModulesWithLocation({
   ];
 }
 
-/// Legacy alias kept so any existing call sites still compile.
 List<Module> appModules({required SharedPreferences prefs}) {
   final hasOnboarded = prefs.getBool('has_completed_onboarding') ?? false;
-  final initialLocation =
-      hasOnboarded ? RoutePaths.home : RoutePaths.onboarding;
+  final isLoggedIn = prefs.getString('auth_user_id') != null;
+  final initialLocation = !hasOnboarded
+      ? RoutePaths.onboarding
+      : !isLoggedIn
+          ? RoutePaths.login
+          : RoutePaths.home;
   return appModulesWithLocation(prefs: prefs, initialLocation: initialLocation);
 }

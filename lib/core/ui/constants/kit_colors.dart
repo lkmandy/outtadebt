@@ -272,6 +272,12 @@ class KitColorsExtension extends ThemeExtension<KitColorsExtension> {
 class KitColors {
   const KitColors._(); // Private constructor to prevent instantiation
 
+  // Brand / semantic colours from the OuttaDebt UI Kit
+  static const navy950  = Color(0xFF0F172A); // Primary button
+  static const slate50  = Color(0xFFF8FAFC); // Page background
+  static const slate100 = Color(0xFFF1F5F9); // Input background
+  static const purple500 = Color(0xFF8B5CF6); // Circles feature
+
   static const red50 = Color(0xFFFEF2F2);
   static const red100 = Color(0xFFFEE2E2);
   static const red200 = Color(0xFFFECACA);

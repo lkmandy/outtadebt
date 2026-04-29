@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:outtadebt/core/services/auth_service.dart';
 import 'package:outtadebt/core/utils/internal_notification/notify_service.dart';
@@ -57,43 +56,12 @@ class SignupViewModel {
       await _authService.createUserWithEmailAndPassword(
         email: email,
         password: password,
+        name: name,
       );
       _routerService.go('/');
-    } on FirebaseAuthException catch (e) {
-      String errorMessage = 'Sign up failed';
-      if (e.code == 'weak-password') {
-        errorMessage = 'Password is too weak';
-      } else if (e.code == 'email-already-in-use') {
-        errorMessage = 'Email is already in use';
-      } else if (e.code == 'invalid-email') {
-        errorMessage = 'Invalid email address';
-      }
-      _notifyService.setToastEvent(
-        ToastEventError(message: errorMessage),
-      );
     } catch (e) {
       _notifyService.setToastEvent(
-        ToastEventError(message: 'An error occurred. Please try again.'),
-      );
-    } finally {
-      isLoading.value = false;
-    }
-  }
-
-  Future<void> signupWithGoogle() async {
-    isLoading.value = true;
-    try {
-      await _authService.signInWithGoogle();
-      _routerService.go('/');
-    } on FirebaseAuthException catch (e) {
-      if (e.code != 'ERROR_ABORTED_BY_USER') {
-        _notifyService.setToastEvent(
-          ToastEventError(message: 'Google sign-up failed'),
-        );
-      }
-    } catch (e) {
-      _notifyService.setToastEvent(
-        ToastEventError(message: 'An error occurred. Please try again.'),
+        ToastEventError(message: e.toString().replaceFirst('Exception: ', '')),
       );
     } finally {
       isLoading.value = false;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:outtadebt/core/ui/app_theme.dart';
+import 'package:outtadebt/core/ui/constants/kit_colors.dart';
 import 'package:outtadebt/core/utils/internal_notification/notify_service.dart';
 import 'package:outtadebt/core/utils/locator.dart';
 import 'package:outtadebt/core/services/auth_service.dart';
@@ -93,10 +94,13 @@ class _HomeViewState extends State<HomeView> {
                   fontWeight: FontWeight.bold,
                   color: context.theme.colorScheme.onSurface,
                 ),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
               ),
             ],
           ),
         ),
+        const SizedBox(width: 12),
         CircleAvatar(
           radius: 24,
           backgroundColor: const Color(0xFF10B981),
@@ -442,7 +446,7 @@ class _HomeViewState extends State<HomeView> {
             icon: const Icon(Icons.add),
             label: const Text('Add Debt'),
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF10B981),
+              backgroundColor: KitColors.navy950,
               foregroundColor: Colors.white,
             ),
           ),

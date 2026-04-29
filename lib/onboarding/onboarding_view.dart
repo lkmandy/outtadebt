@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:outtadebt/core/ui/app_theme.dart';
+import 'package:outtadebt/core/ui/constants/kit_colors.dart';
 import 'package:outtadebt/core/utils/locator.dart';
 import 'package:outtadebt/core/utils/navigation/router_service.dart';
 import 'package:outtadebt/core/utils/preferences/user_preferences_service.dart';
@@ -83,7 +84,10 @@ class _OnboardingViewState extends State<OnboardingView> {
                     height: 52,
                     child: FilledButton(
                       onPressed: _viewModel.next,
-                      child: Text(isLastPage ? 'Get Started' : 'Next'),
+                      style: FilledButton.styleFrom(
+                        backgroundColor: KitColors.green600,
+                      ),
+                      child: Text(isLastPage ? 'Get Started →' : 'Next'),
                     ),
                   ),
                 ),

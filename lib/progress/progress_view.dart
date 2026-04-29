@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:outtadebt/core/ui/app_theme.dart';
+import 'package:outtadebt/core/ui/constants/kit_colors.dart';
 import 'package:outtadebt/core/utils/locator.dart';
 import 'package:outtadebt/core/services/debt_service.dart';
 import 'package:outtadebt/core/services/auth_service.dart';
@@ -228,8 +229,8 @@ class _ProgressViewState extends State<ProgressView> {
                           isCurved: true,
                           gradient: LinearGradient(
                             colors: [
-                              const Color(0xFF10B981),
-                              const Color(0xFF10B981).withValues(alpha: 0.5),
+                              KitColors.green600,
+                              KitColors.green600.withValues(alpha: 0.5),
                             ],
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
@@ -241,7 +242,7 @@ class _ProgressViewState extends State<ProgressView> {
                             getDotPainter: (spot, percent, barData, index) {
                               return FlDotCirclePainter(
                                 radius: 3,
-                                color: const Color(0xFF10B981),
+                                color: KitColors.green600,
                                 strokeWidth: 1,
                                 strokeColor: Colors.white,
                               );
@@ -251,8 +252,8 @@ class _ProgressViewState extends State<ProgressView> {
                             show: true,
                             gradient: LinearGradient(
                               colors: [
-                                const Color(0xFF10B981).withValues(alpha: 0.3),
-                                const Color(0xFF10B981).withValues(alpha: 0.0),
+                                KitColors.green600.withValues(alpha: 0.3),
+                                KitColors.green600.withValues(alpha: 0.0),
                               ],
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
@@ -417,7 +418,7 @@ class _ProgressViewState extends State<ProgressView> {
                           '\$${payment.toStringAsFixed(2)}',
                           style: context.textStyles.standard.copyWith(
                             fontWeight: FontWeight.bold,
-                            color: const Color(0xFF10B981),
+                            color: KitColors.green600,
                           ),
                         ),
                       ],
@@ -428,7 +429,7 @@ class _ProgressViewState extends State<ProgressView> {
                       min: 10,
                       max: 5000,
                       divisions: 499,
-                      activeColor: const Color(0xFF10B981),
+                      activeColor: KitColors.green600,
                       inactiveColor: context.kitColors.neutral300,
                       label: '\$${payment.toStringAsFixed(0)}',
                       onChanged: _viewModel.updateSimulatedPayment,
@@ -473,7 +474,7 @@ class _ProgressViewState extends State<ProgressView> {
                                   '\$${_viewModel.interestSaved.toStringAsFixed(2)}',
                                   style: context.textStyles.lg.copyWith(
                                     fontWeight: FontWeight.bold,
-                                    color: const Color(0xFF10B981),
+                                    color: KitColors.green600,
                                   ),
                                 ),
                               ],
@@ -584,7 +585,7 @@ class _SummaryCard extends StatelessWidget {
           children: [
             Icon(
               icon,
-              color: const Color(0xFF10B981),
+              color: KitColors.green600,
               size: 24,
             ),
             SizedBox(height: context.spacing.sm),
@@ -634,12 +635,12 @@ class _MilestoneChip extends StatelessWidget {
       decoration: BoxDecoration(
         color: isCompleted
             ? isFinal
-                ? const Color(0xFF10B981)
-                : const Color(0xFF10B981).withValues(alpha: 0.1)
+                ? KitColors.green600
+                : KitColors.green600.withValues(alpha: 0.1)
             : context.kitColors.neutral200,
         borderRadius: BorderRadius.circular(20),
         border: isCompleted && isFinal
-            ? Border.all(color: const Color(0xFF10B981), width: 2)
+            ? Border.all(color: KitColors.green600, width: 2)
             : null,
       ),
       child: Row(
@@ -651,7 +652,7 @@ class _MilestoneChip extends StatelessWidget {
               child: Icon(
                 Icons.check_circle,
                 size: 16,
-                color: isFinal ? Colors.white : const Color(0xFF10B981),
+                color: isFinal ? Colors.white : KitColors.green600,
               ),
             ),
           Text(
@@ -660,7 +661,7 @@ class _MilestoneChip extends StatelessWidget {
               color: isCompleted
                   ? isFinal
                       ? Colors.white
-                      : const Color(0xFF10B981)
+                      : KitColors.green600
                   : context.theme.colorScheme.onSurface.withValues(alpha: 0.7),
               fontWeight: isCompleted ? FontWeight.w600 : FontWeight.normal,
             ),

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:outtadebt/config/locator_config.dart';
@@ -32,20 +31,18 @@ class StartupViewModel {
   Future<void> initializeApp() async {
     appStateNotifier.value = const InitializingApp();
     try {
-      // Determine initial route based on onboarding and auth state
       final hasOnboarded = _prefs.getBool('has_completed_onboarding') ?? false;
-      final currentUser = FirebaseAuth.instance.currentUser;
+      final isLoggedIn = _prefs.getString('auth_user_id') != null;
 
       final String initialLocation;
       if (!hasOnboarded) {
         initialLocation = RoutePaths.onboarding;
-      } else if (currentUser == null) {
+      } else if (!isLoggedIn) {
         initialLocation = RoutePaths.login;
       } else {
         initialLocation = RoutePaths.home;
       }
 
-      // Override the locator with the computed initial location
       locator.registerMany(appModulesWithLocation(
         prefs: _prefs,
         initialLocation: initialLocation,

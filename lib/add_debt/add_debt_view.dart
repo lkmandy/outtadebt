@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:outtadebt/add_debt/add_debt_view_model.dart';
+import 'package:outtadebt/core/ui/constants/kit_colors.dart';
 import 'package:outtadebt/core/ui/widgets/app_text_field.dart';
 import 'package:outtadebt/core/ui/widgets/primary_button.dart';
 import 'package:outtadebt/core/utils/locator.dart';
@@ -85,9 +86,9 @@ class _AddDebtViewState extends State<AddDebtView> {
                                   vertical: 12,
                                 ),
                                 decoration: BoxDecoration(
-                                  color: isSelected ? const Color(0xFF10B981).withValues(alpha: 0.1) : Theme.of(context).colorScheme.surface,
+                                  color: isSelected ? KitColors.green600.withValues(alpha: 0.1) : Theme.of(context).colorScheme.surface,
                                   border: Border.all(
-                                    color: isSelected ? const Color(0xFF10B981) : Theme.of(context).colorScheme.outlineVariant,
+                                    color: isSelected ? KitColors.green600 : Theme.of(context).colorScheme.outlineVariant,
                                     width: isSelected ? 2 : 1,
                                   ),
                                   borderRadius: BorderRadius.circular(12),
@@ -106,7 +107,7 @@ class _AddDebtViewState extends State<AddDebtView> {
                                       style: TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w500,
-                                        color: isSelected ? const Color(0xFF047857) : const Color(0xFF374151),
+                                        color: isSelected ? KitColors.green600 : Theme.of(context).colorScheme.onSurface,
                                       ),
                                     ),
                                   ],

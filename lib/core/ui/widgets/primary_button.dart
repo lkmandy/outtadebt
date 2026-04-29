@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:outtadebt/core/ui/constants/kit_colors.dart';
 
 enum ButtonVariant { primary, secondary }
 
@@ -20,9 +21,6 @@ class PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final emeraldColor = const Color(0xFF10B981);
-    final emeraldBorder = const Color(0xFF10B981);
-
     switch (variant) {
       case ButtonVariant.primary:
         return SizedBox(
@@ -31,24 +29,22 @@ class PrimaryButton extends StatelessWidget {
           child: ElevatedButton(
             onPressed: isLoading ? null : onPressed,
             style: ElevatedButton.styleFrom(
-              backgroundColor: emeraldColor,
-              disabledBackgroundColor: emeraldColor.withValues(alpha: 0.5),
+              backgroundColor: KitColors.navy950,
+              disabledBackgroundColor: KitColors.navy950.withValues(alpha: 0.4),
               foregroundColor: Colors.white,
-              disabledForegroundColor: Colors.white,
+              disabledForegroundColor: Colors.white.withValues(alpha: 0.7),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(16),
               ),
               elevation: 0,
             ),
             child: isLoading
-                ? SizedBox(
+                ? const SizedBox(
                     height: 24,
                     width: 24,
                     child: CircularProgressIndicator(
                       strokeWidth: 2,
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        Colors.white.withValues(alpha: 0.8),
-                      ),
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                     ),
                   )
                 : Text(
@@ -70,15 +66,15 @@ class PrimaryButton extends StatelessWidget {
             style: OutlinedButton.styleFrom(
               side: BorderSide(
                 color: isLoading
-                    ? emeraldBorder.withValues(alpha: 0.5)
-                    : emeraldBorder,
+                    ? const Color(0xFFE2E8F0).withValues(alpha: 0.5)
+                    : const Color(0xFFE2E8F0),
                 width: 1.5,
               ),
+              foregroundColor: KitColors.navy950,
+              disabledForegroundColor: KitColors.navy950.withValues(alpha: 0.4),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              foregroundColor: emeraldColor,
-              disabledForegroundColor: emeraldColor.withValues(alpha: 0.5),
             ),
             child: isLoading
                 ? SizedBox(
@@ -87,7 +83,7 @@ class PrimaryButton extends StatelessWidget {
                     child: CircularProgressIndicator(
                       strokeWidth: 2,
                       valueColor: AlwaysStoppedAnimation<Color>(
-                        emeraldColor.withValues(alpha: 0.8),
+                        KitColors.navy950.withValues(alpha: 0.6),
                       ),
                     ),
                   )
