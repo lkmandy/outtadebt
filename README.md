@@ -1,27 +1,61 @@
-# Hungrimind Flutter Boilerplate
+# OutaDebt
 
-## Overview
+A Flutter app for tracking, managing, and eliminating personal debt — with social circles for community-based financial support.
 
-The Hungrimind Flutter Boilerplate is built for developers and teams who care about scalable, testable, and maintainable Flutter applications. Whether building solo or as part of a team, this boilerplate provides a solid foundation using the MVVM architecture and consistent patterns.
+> Scaffolded from the [Hungrimind Flutter Boilerplate](https://hungrimind.com) — a minimal-dependency MVVM foundation built for scalable, testable Flutter apps.
 
-Crafted by the team at Hungrimind — with deep experience across Flutter, and large-scale app architecture — this boilerplate is here to help you ship high-quality apps, faster.
+## Features
 
-## What's Included
+### Debt Tracking
+- Add and manage multiple debts with balance, interest rate, minimum payment, and due date
+- Categorize by type: Credit Card, Student Loan, Mortgage, Car Loan, Medical Bill, or Other
+- Color-coded debt types for at-a-glance clarity
 
-*   **💻 CLI:** Our command line tool to speed up your development.
-*   **📄 Documentation:** Step-by-step guides to help you use, customize, and expand the boilerplate to fit your project.
-*   **💬 Support:** We use Discord to collect all feedback about the boilerplate, documentation, and anything related. Please join us there if you have any questions or feedback.
+### Progress & Analytics
+- Dashboard with total debt and per-category breakdown
+- 12-month payoff projection chart with interest calculations
+- Pie chart showing debt distribution across types
+- Debt-free date estimator based on adjustable monthly payment amounts
+- Interest savings calculator comparing simulated vs. minimum payments
 
-## Guiding Principles
+### Social Circles
+- Create or join circles for community-based debt accountability
+- Categories: Credit Card, Student Loan, Mortgage, Car Loan, General
+- Track member contributions toward shared goals
+- View circle details and member participation
 
-### Minimal Dependencies
-Every dependency you add is a liability that you need to work around. We believe in owning your code base and not depending on external libraries (as much as it makes sense). We only use the essential packages maintained by the Flutter or Dart team; the rest is native Flutter code.
+### Auth & Persistence
+- Email/password signup and login
+- Session persistence via SharedPreferences
+- Display name support
 
-### MVVM Architecture
-There are many architectures and state management approaches. They can all work, but the more time you spend choosing and deliberating, the less time you spend building products. We use the MVVM Architecture, which has been battle-tested by us and recommended by the Flutter team.
+## Tech Stack
 
-### Own Your Code
-This could have been a package, but we believe in owning your code. All these features are code that you can use, explore, and update for your use cases. (Let us know about your updates so we can potentially improve the boilerplate.)
+- **Flutter** (iOS, Android, Web, Windows)
+- **Firebase** — Firestore database, Firebase Core
+- **GoRouter** — navigation and deep linking
+- **fl_chart** — analytics charts and visualizations
+- **ValueNotifier / MVVM** — state management
+- **SharedPreferences** — local session persistence
+- **Lottie / Flutter SVG** — animations and graphics
 
-### Align with the Flutter Team
-Our goal is to align closely with the Flutter team's recommendations and best practices. When something is missing, we use our expertise to fill the gaps.
+## Architecture
+
+Follows MVVM with a service locator for dependency injection:
+
+- `Views` — UI only, no logic
+- `ViewModels` — page state and business logic via `ValueNotifier`
+- `Services` — shared state across multiple ViewModels, registered in the locator
+- `config/locator_config.dart` — service registration
+- `config/route_config.dart` — typed route constants and GoRouter setup
+
+See [agents.md](agents.md) for full architecture rules, conventions, and code examples.
+
+## Getting Started
+
+```bash
+flutter pub get
+flutter run
+```
+
+Firebase is required. Add your `google-services.json` (Android) and `GoogleService-Info.plist` (iOS) before running on those platforms.
